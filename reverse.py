@@ -13,7 +13,7 @@ def ispalindrome(num):
 
 
 print(reverse (121))
-print(ispalindrome(121))
+print(ispalindrome(12145))
 
 
 
