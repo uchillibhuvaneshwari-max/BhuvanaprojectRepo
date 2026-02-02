@@ -1,6 +1,2 @@
-hello bhuvana
+hello bhuvana 
 
-story 19
-
-for i in range(0,5):
-     print(i)
