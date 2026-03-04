@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100vh;
+            background: #343a40;
+            color: white;
+            position: fixed;
+            width: 220px;
+            padding-top: 20px;
+        }
+
+        .sidebar h4 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background: #007bff;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Cards */
+        .card-box {
+            border-radius: 10px;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .bg-students { background: #17a2b8; }
+        .bg-trainers { background: #28a745; }
+        .bg-feedback { background: #ffc107; color: black; }
+    </style>
+</head>
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+<div class="sidebar">
+    <h4>Admin Panel</h4>
+    <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+    <a href="{% url 'admin_students' %}">Students</a>
+    <a href="{% url 'admin_trainers' %}">Trainers</a>
+    <a href="{% url 'admin_courses' %}">Courses</a>
+    <a href="{% url 'admin_feedback' %}">Feedback</a>
+    <a href="{% url 'admin_questions' %}">Questions</a>
+    <a href="{% url 'admin_logout' %}">Logout</a>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="main-content">
+
+    <!-- Top Navbar -->
+    <div class="top-navbar">
+        <h3>Welcome Admin 👋</h3>
+    </div>
+
+    <!-- Cards Row -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card-box bg-students">
+                <h5>Total Students</h5>
+                <h2>{{ total_students }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-box bg-trainers">
+                <h5>Total Trainers</h5>
+                <h2>{{ total_trainers }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-box bg-feedback">
+                <h5>Total Feedback</h5>
+                <h2>{{ total_feedback }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Students Table -->
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h5>Students List</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Student ID</th>
+                        <th>Course</th>
+                        <th>Trainer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.student_id }}</td>
+                        <td>{{ student.course.name }}</td>
+                        <td>{{ student.trainer.name }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-danger">
+                            No Students Found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

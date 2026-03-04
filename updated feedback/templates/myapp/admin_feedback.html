@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Feedback</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+body { background:#f4f6f9; margin:0; }
+.sidebar {
+    width:240px; height:100vh; position:fixed;
+    background:linear-gradient(180deg,#2c3e50,#1a252f);
+    color:white; padding-top:20px;
+}
+.sidebar a {
+    display:block; color:#ddd; padding:12px 20px; text-decoration:none;
+}
+.sidebar a:hover { background:#0d6efd; color:white; }
+.active-menu { background:#0d6efd; color:white !important; }
+.main-content { margin-left:240px; padding:30px; }
+.header-card {
+    background:linear-gradient(90deg,#6f42c1,#b197fc);
+    color:white; padding:18px; border-radius:10px;
+    font-size:24px; margin-bottom:20px;
+}
+.comment-box {
+    background:#fff3cd;
+    padding:8px;
+    border-radius:6px;
+}
+</style>
+
+<body>
+
+<div class="sidebar">
+    <h2 class="text-center">Admin Panel</h2>
+    <a href="{% url 'admin_dashboard' %}">🏠 Dashboard</a>
+    <a href="{% url 'admin_students' %}">👩‍🎓 Students</a>
+    <a href="{% url 'admin_trainers' %}">👨‍🏫 Trainers</a>
+    <a href="{% url 'admin_courses' %}">📚 Courses</a>
+    <a href="{% url 'admin_feedback' %}" class="active-menu">💬 Feedback</a>
+    <a href="{% url 'admin_logout' %}">🚪 Logout</a>
+</div>
+
+<div class="main-content">
+    <div class="header-card shadow">
+        💬 Students Feedback & Comments
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Student</th>
+                        <th>Trainer</th>
+                        <th>Comment</th>
+                        <th>Submitted Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fb in feedbacks %}
+                    <tr>
+                        <td class="fw-bold text-primary">
+                            {{ fb.student.name }}
+                        </td>
+                        <td>{{ fb.trainer.name }}</td>
+                        <td>
+                            {% if fb.comment %}
+                                <div class="comment-box">
+                                    {{ fb.comment }}
+                                </div>
+                            {% else %}
+                                <span class="text-muted">No Comment</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ fb.submitted_at|date:"M d, Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-danger fw-bold">
+                            No Feedback Submitted Yet
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
